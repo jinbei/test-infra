@@ -12,15 +12,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     sudo rpm -i \
       http://yum.puppetlabs.com/puppetlabs-release-el-6.noarch.rpm
     sudo yum install -y puppet
-    sudo /sbin/chkconfig --add puppet
-    sudo /sbin/chkconfig puppet on
-    sudo /etc/init.d/puppet start
   EOF
 
   config.vm.define :app do |c|
     c.vm.provision :shell do |shell|
       shell.path = "provision.sh"
       shell.args = "app"
+    end
+  end
+  
+  config.vm.define :proxy do |c|
+    c.vm.provision :shell do |shell|
+      shell.path = "provision.sh"
+      shell.args = "proxy"
     end
   end
 end
